@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cosmic Clicker</title>
+</head>
+
+<body>
+    <h1>Cosmic Clicker</h1>
+
+    <p>Score: <span id="score">0</span> galaxies</p>
+    <p>Score per second: <span id="scorepersecond">0</span> galaxies per second</p>
+
+    <img src="images/clickerbutton1.jpg" height="256px" width="256px" onclick="addToScore(clickingPower)">
+
+    <button onclick="buySpaceship()">Spaceships [<span id="spaceshipCost">15</span>] -- <span id="Spaceships">0</span></button>
+    <button onclick="buySpacestation()">Spacestations [<span id="SpacestationCost">100</span>] -- <span id="Spacestations">0</span></button>
+
+    <script>
+    window.onload = function() {
+      // Initialize the game.
+      var score = 0;
+      var clickingPower = 1;
+
+      var spaceshipCost = 15;
+      var SpacestationCost = 100;
+      var Spaceships = 0;
+      var Spacestations = 0;
+
+      // Update the score per second counter.
+      updateScorePerSecond();
+
+      // Start the game loop.
+      setInterval(function() {
+        score = score + Spacestations * 3
+        score = score + Spaceships;
+        document.getElementById("score").innerHTML = score;
+      }, 1000); // 1000ms = 1 second
+
+      // Function to add to the score.
+      function addToScore(amount) {
+        score = score + amount;
+        document.getElementById("score").innerHTML = score;
+      }
+
+      // Function to buy a spaceship.
+      function buySpaceship() {
+        if (score >= spaceshipCost) {
+          score = score - spaceshipCost;
+          Spaceships = Spaceships + 1;
+          spaceshipCost = Math.round(spaceshipCost * 1.15);
+
+          document.getElementById("score").innerHTML = score;
+          document.getElementById("spaceshipCost").innerHTML = spaceshipCost;
+          document.getElementById("Spaceships").innerHTML = Spaceships;
+
+          updateScorePerSecond();
+        }
+      }
+
+      // Function to buy a spacestation.
+      function buySpacestation() {
+        if (score >= SpacestationCost) {
+          score = score - SpacestationCost;
+          Spacestations = Spacestations + 1;
+          SpacestationCost = Math.round(SpacestationCost * 1.15);
+
+          document.getElementById("score").innerHTML = score;
+          document.getElementById("SpacestationCost").innerHTML = SpacestationCost;
+          document.getElementById("Spacestations").innerHTML = Spacestations;
+
+          updateScorePerSecond();
+        }
+      }
+
+      // Function to update the score per second counter.
+      function updateScorePerSecond() {
+        scorePerSecond = Spaceships + Spacestations * 5;
+        document.getElementById("scorepersecond").innerHTML = scorePerSecond;
+      }
+    };
+    </script>
+</body>
+</html>

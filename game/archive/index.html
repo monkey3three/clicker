@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <title>Cosmic Clicker</title>
+
+        <style>
+            .sectionLeft {
+                float: left;
+                width 80%;
+            }
+            .sectionRight{
+                float: right;
+                width 20%;
+            }
+            .scoreContainer{
+                background-color: rgb(238, 238, 238, 0.6);
+                width 50%;
+                padding: 10px;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="sectionLeft">
+            <center>
+            <div class="scoreContainer">
+        <span id="score">0</span> galaxies<br>
+        <span id="scorepersecond">0</span> galaxies per second
+        </div>
+        <br>
+                <div class="clickercontainer">
+                    <img src="images/clickerbutton1.jpg" height="256px" width="256px" onclick="addToScore(clickingPower)">
+                </div>
+                </center>
+        </div>
+        
+        <div class="sectionRight">
+        <button onclick="buySpaceship()">Spaceships [<span id="spaceshipCost">15</span>] -- <span id="Spaceships">0</span></button>
+        <button onclick="buySpacestation()">Spacestations [<span id="SpacestationCost">100</span>] -- <span id="Spacestations">0</span></button>
+        </div>
+
+        <script>
+            var score = 0;
+            var clickingPower = 1;
+
+            var spaceshipCost = 15;
+            var SpacestationCost = 100;
+            var Spaceships = 0;
+            var Spacestations = 0;
+
+            function buySpaceship() {
+                if (score >= spaceshipCost) {
+                    score = score - spaceshipCost;
+                    Spaceships = Spaceships + 1;
+                    spaceshipCost = Math.round(spaceshipCost * 1.15);
+
+                    document.getElementById("score").innerHTML = score;
+                    document.getElementById("spaceshipCost").innerHTML = spaceshipCost;
+                    document.getElementById("Spaceships").innerHTML = Spaceships;
+                    updateScorePerSecond();
+                }
+            }
+
+            function buySpacestation() {
+                if (score >= SpacestationCost) {
+                    score = score - SpacestationCost;
+                    Spacestations = Spacestations + 1;
+                    SpacestationCost = Math.round(SpacestationCost * 1.15);
+
+                    document.getElementById("score").innerHTML = score;
+                    document.getElementById("SpacestationCost").innerHTML = SpacestationCost;
+                    document.getElementById("Spacestations").innerHTML = Spacestations;
+                    updateScorePerSecond();
+                }
+            }
+
+
+            function addToScore(amount) {
+                score = score + amount;
+                document.getElementById("score").innerHTML = score;
+            }
+
+            function updateScorePerSecond() {
+                scorePerSecond = Spaceships + Spacestations * 5;
+                document.getElementById("scorpersecond").innerHTML = scorepersecond;
+            }
+
+            setInterval(function () {
+                score = score + Spacestations * 3
+                score = score + Spaceships;
+                document.getElementById("score").innerHTML = score;
+
+                document.title = score + " galaxies - Cosmic Clicker";
+            }, 1000); // 1000ms = 1 second
+        </script>
+    </body>
+</html>
